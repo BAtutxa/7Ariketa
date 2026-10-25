@@ -62,7 +62,6 @@ fun BideojokoakScreen(modifier: Modifier = Modifier) {
                 modifier = Modifier.padding(bottom = 16.dp)
             )
 
-
             Button(
                 onClick = {
                     bideojokoak = datuakKargatu(context, "bideojokoak.json")
