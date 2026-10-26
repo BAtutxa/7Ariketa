@@ -24,6 +24,19 @@ import com.example.a7ariketa.models.Pelikula
 import com.example.a7ariketa.ui.theme._7AriketaTheme
 import androidx.compose.foundation.lazy.items
 import android.util.Log
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material3.CardDefaults
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.focus.focusModifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 
 
 class MainActivity : ComponentActivity() {
@@ -42,32 +55,42 @@ class MainActivity : ComponentActivity() {
     }
     @Composable
     fun BideojokoakAPP (modifier:Modifier = Modifier){
-        val datuak = Datuak().datuakLortu(LocalContext.current)
-        Log.d ("Lista",datuak.toString())
+        val context = LocalContext.current
+        val datuak = remember { Datuak().datuakLortu(context)}
+        remember { Log.d ("Lista",datuak.toString())}
         Box(modifier = Modifier.fillMaxSize()){
             Image(
                 painter = painterResource(R.drawable.fondoa),
-                contentDescription = null
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize()
             )
             LazyColumn(modifier = Modifier) {
                 items (datuak){ datua -> JokoaCard(datua = datua)}
             }
         }
-
     }
 
     @Composable
     fun JokoaCard (datua: Pelikula, modifier : Modifier = Modifier){
-        Card() {
-            Column() {
+        Card(modifier=Modifier.fillMaxSize()
+            .padding(20.dp),
+            colors = CardDefaults.cardColors(Color.White)) {
+            Column(modifier = Modifier.padding(10.dp)) {
                 Text(
-                    text = "ID: ${datua.id} Izena: ${datua.titulua}"
+                    text = "ID: ${datua.identifikazioa} Izena: ${datua.titulua}",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center,
+                    fontWeight = FontWeight.Bold
                 )
+                Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = "Mota: ${datua.mota} Plataforma: ${datua.plataforma}"
                 )
             }
         }
+        Spacer(modifier = Modifier.height(16.dp))
+
+
     }
 
     @Preview
